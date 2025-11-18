@@ -1,0 +1,11 @@
+63f7b34db8d8cdea90c76aacccf841ec
+::res://::1763439180
+icon.svg::CompressedTexture2D::5349895774244062614::1763377657::1763377661::1::::<><><>0<>0<>8a5070debb1314c9881a2025def07603<>res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex::
+::res://assets/::1763377714
+::res://assets/symbols/::1763377714
+::res://scenes/::1763390039
+main.tscn::PackedScene::5183130753206839346::1763389996::0::1::::<><><>0<>0<><>::uid://buimde5i5h68s::::res://scripts/main.gd<>uid://b8i664sk8rr5d::::res://scenes/reel.tscn
+reel.tscn::PackedScene::4721106683650235931::1763390039::0::1::::<><><>0<>0<><>::uid://c0t43t00ywl7m::::res://scripts/reel.gd
+::res://scripts/::1763390086
+main.gd::GDScript::3807446796622557832::1763390065::0::1::::<>Node2D<><>0<>0<><>::
+reel.gd::GDScript::6568597468416311304::1763390086::0::1::::<>Node2D<><>0<>0<><>::
