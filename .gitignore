@@ -1,16 +1,3 @@
-# Godot import cache (generated)
-.import/
-
-# Export presets (you may want to track later, optional)
-export_presets.cfg
-
-# OS / IDE junk
-.DS_Store
-Thumbs.db
-.vscode/
-.idea/
-
-# Build artifacts
-*.exe
-*.pck
-*.zip
+# Godot 4+ specific ignores
+.godot/
+/android/

@@ -1,6 +1,5 @@
-Panel
-ColorRect
 Label
 Button
-AnimationPlayer
 Node2D
+Panel
+VBoxContainer
