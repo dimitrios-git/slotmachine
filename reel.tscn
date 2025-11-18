@@ -12,7 +12,8 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_yu7nf")
 
-[node name="Frame" type="Panel" parent="."]
+[node name="Container" type="Control" parent="."]
+clip_contents = true
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -20,30 +21,25 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Rows" type="VBoxContainer" parent="Frame"]
+[node name="Row0" type="Label" parent="Container"]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 135.0
-theme_override_constants/separation = 0
-alignment = 1
-
-[node name="Row0" type="Label" parent="Frame/Rows"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 42
-text = "A"
+offset_right = 80.0
+offset_bottom = 60.0
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Row1" type="Label" parent="Frame/Rows"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 42
-text = "B"
+[node name="Row1" type="Label" parent="Container"]
+layout_mode = 0
+offset_top = 60.0
+offset_right = 80.0
+offset_bottom = 120.0
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Row2" type="Label" parent="Frame/Rows"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 42
-text = "C"
+[node name="Row2" type="Label" parent="Container"]
+layout_mode = 0
+offset_top = 120.0
+offset_right = 80.0
+offset_bottom = 180.0
 horizontal_alignment = 1
 vertical_alignment = 1
