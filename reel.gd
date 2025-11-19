@@ -1,8 +1,8 @@
 extends Control
 
-signal spin_finished(symbol: String)
+signal spin_finished(symbol: SlotSymbol)
 
-@export var symbols: Array[String] = ["A", "B", "C", "D", "E"]
+var symbols: Array[SlotSymbol] = []
 
 @export var spin_speed: float = 900.0
 @export var slowdown_distance: float = 240.0
@@ -13,14 +13,16 @@ signal spin_finished(symbol: String)
 
 var row_height: float
 var spinning: bool = false
-var target_symbol: String = ""
+var target_symbol: SlotSymbol
 var symbol_index: int = 0
 
+func set_symbol_list(list: Array[SlotSymbol]) -> void:
+	symbols = list
 
 func _ready():
 	randomize()
 
-	# Dynamically find all row nodes (strictly Control only)
+	# Collect rows dynamically
 	rows.clear()
 	for child in container.get_children():
 		if child is Control:
@@ -32,12 +34,20 @@ func _ready():
 
 	row_height = rows[0].size.y
 
-	# Initialize with random symbols
+	# Initialize rows with random symbol IDs
+	# Initial symbols will be assigned later by SlotManager
+
+func initialize_reel():
+	if symbols.is_empty():
+		push_error("%s: symbols not assigned before initialize_reel()" % name)
+		return
+
+	# Initialize rows with random IDs
 	for r in rows:
-		r.text = symbols[randi() % symbols.size()]
+		var s: SlotSymbol = symbols[randi() % symbols.size()]
+		r.text = s.id
 
-
-func spin(symbol: String):
+func spin(symbol: SlotSymbol):
 	if spinning:
 		return
 
@@ -82,23 +92,26 @@ func _move_rows(distance: float) -> void:
 	for r in rows:
 		r.position.y += distance
 
-	# Wrap any row exiting the bottom
+	# Wrap rows
 	for r in rows:
 		if r.position.y >= total_height:
 			r.position.y -= total_height
 			symbol_index = (symbol_index + 1) % symbols.size()
-			r.text = symbols[symbol_index]
+			var s: SlotSymbol = symbols[symbol_index]
+			r.text = s.id
 
 
-func _set_center_symbol(symbol: String) -> void:
+func _set_center_symbol(symbol: SlotSymbol) -> void:
+	# Find index of target in symbols array
 	var idx := symbols.find(symbol)
 	if idx == -1:
 		idx = 0
 
 	var center := rows.size() / 2
 
-	# Align each row to proper symbol
+	# Align rows around the target symbol
 	for i in range(rows.size()):
 		var sym_idx := (idx + (i - center) + symbols.size()) % symbols.size()
-		rows[i].text = symbols[sym_idx]
+		var s: SlotSymbol = symbols[sym_idx]
+		rows[i].text = s.id
 		rows[i].position.y = row_height * i

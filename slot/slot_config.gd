@@ -3,7 +3,7 @@ extends Resource
 class_name SlotConfig
 
 # The full symbol set used in the game
-@export var symbols: Array[String] = ["A", "B", "C", "D", "E"]
+@export var symbols: Array[SlotSymbol] = []
 
 # Number of reels the game should use
 @export var reel_count: int = 3

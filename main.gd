@@ -1,27 +1,35 @@
 extends Node2D
 
 @export var slot_manager: SlotManager
-var credits := 100
-var spin_cost := 5
+
+var credits: int = 100
+var spin_cost: int = 5
 
 @onready var spin_button: Button = $SpinButton
 @onready var credits_label: Label = $CreditsLabel
 @onready var result_label: Label = $ResultLabel
 
-var finished_count := 0
-var current_results: Array[String] = []
+var finished_reels := 0
+var current_results: Array[SlotSymbol] = []
+
 
 func _ready():
+	if slot_manager == null:
+		push_error("Main: slot_manager is not assigned!")
+		return
+
 	update_ui()
 
-	# Hook reel finish signals
-	for r in slot_manager.reels:
-		r.spin_finished.connect(_on_reel_finished)
+	# Connect reel finish signals
+	for reel in slot_manager.reels:
+		reel.spin_finished.connect(_on_reel_finished)
 
 	spin_button.pressed.connect(_on_spin_pressed)
 
+
 func update_ui():
 	credits_label.text = "Credits: %d" % credits
+
 
 func _on_spin_pressed():
 	if credits < spin_cost:
@@ -32,20 +40,25 @@ func _on_spin_pressed():
 	update_ui()
 	result_label.text = ""
 
-	finished_count = 0
+	# Reset state
+	finished_reels = 0
+
+	# Manager decides the target symbols (returns Array[SlotSymbol])
 	current_results = slot_manager.spin()
 
 	spin_button.disabled = true
 
-func _on_reel_finished(symbol: String):
-	finished_count += 1
 
-	if finished_count == slot_manager.config.reel_count:
-		var payout := slot_manager.evaluate(current_results)
-		credits += payout
+func _on_reel_finished(symbol: SlotSymbol):
+	finished_reels += 1
+
+	# All reels finished?
+	if finished_reels == slot_manager.config.reel_count:
+		var payout: int = slot_manager.evaluate(current_results)
 
 		if payout > 0:
 			result_label.text = "WIN! +%d" % payout
+			credits += payout
 		else:
 			result_label.text = "No win"
 
