@@ -1,5 +1,6 @@
-[gd_resource type="Resource" script_class="SlotConfig" load_steps=8 format=3 uid="uid://4oq0fbm8fr5a"]
+[gd_resource type="Resource" script_class="SlotConfig" load_steps=9 format=3 uid="uid://4oq0fbm8fr5a"]
 
+[ext_resource type="Resource" uid="uid://c8s1oy3dlk1nt" path="res://slot/default_paytable.tres" id="1_2oavf"]
 [ext_resource type="Script" uid="uid://sp3n3g5uo2eo" path="res://slot/slot_config.gd" id="1_uuus3"]
 [ext_resource type="Script" uid="uid://cpntuv5j75o7e" path="res://slot/slot_symbol.gd" id="2_vklun"]
 
@@ -36,4 +37,5 @@ metadata/_custom_type_script = "uid://cpntuv5j75o7e"
 [resource]
 script = ExtResource("1_uuus3")
 symbols = Array[ExtResource("2_vklun")]([SubResource("Resource_2oavf"), SubResource("Resource_r7ejk"), SubResource("Resource_iqlgr"), SubResource("Resource_4ihdq"), SubResource("Resource_lo2ou")])
+paytable = ExtResource("1_2oavf")
 metadata/_custom_type_script = "uid://sp3n3g5uo2eo"

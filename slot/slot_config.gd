@@ -8,9 +8,5 @@ class_name SlotConfig
 # Number of reels the game should use
 @export var reel_count: int = 3
 
-# Payouts: match_count -> credit reward
-# (phase 2 simple version)
-@export var payouts := {
-	3: 50, # three of a kind
-	2: 10  # two of a kind
-}
+# Payouts
+@export var paytable: Paytable

@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="Paytable" load_steps=2 format=3 uid="uid://c8s1oy3dlk1nt"]
+
+[ext_resource type="Script" uid="uid://wjfd5vtrt0sf" path="res://slot/paytable.gd" id="1_qmlx7"]
+
+[resource]
+script = ExtResource("1_qmlx7")
+payouts = {
+"A": {
+2: 10,
+3: 50
+},
+"B": {
+2: 10,
+3: 40
+},
+"C": {
+3: 30
+},
+"D": {
+3: 20
+},
+"E": {
+3: 10
+}
+}
+metadata/_custom_type_script = "uid://wjfd5vtrt0sf"

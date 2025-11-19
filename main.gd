@@ -49,7 +49,7 @@ func _on_spin_pressed():
 	spin_button.disabled = true
 
 
-func _on_reel_finished(symbol: SlotSymbol):
+func _on_reel_finished(_symbol: SlotSymbol):
 	finished_reels += 1
 
 	# All reels finished?

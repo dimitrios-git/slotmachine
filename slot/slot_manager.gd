@@ -4,9 +4,6 @@ class_name SlotManager
 @export var config: SlotConfig
 @export var reels: Array[Node]
 
-signal spin_complete(result_symbols: Array[SlotSymbol], payout: int)
-
-
 func _ready():
 	call_deferred("initialize_reels")
 
@@ -59,13 +56,28 @@ func weighted_random_symbol() -> SlotSymbol:
 
 
 func evaluate(symbols: Array[SlotSymbol]) -> int:
-	var counts := {}
+	if symbols.is_empty():
+		return 0
 
-	for s in symbols:
-		counts[s.id] = (counts.get(s.id, 0) + 1)
+	# Count how many times each symbol ID appears
+	var counts: Dictionary = {}
 
-	var highest := 0
-	for k in counts.keys():
-		highest = max(highest, counts[k])
+	for s: SlotSymbol in symbols:
+		var id: String = s.id
+		var existing: int = counts.get(id, 0)
+		counts[id] = existing + 1
 
-	return config.payouts.get(highest, 0)
+	var best_symbol: String = ""
+	var best_count: int = 0
+
+	for symbol_id: String in counts.keys():
+		var count: int = counts[symbol_id]
+		if count > best_count:
+			best_count = count
+			best_symbol = symbol_id
+
+	# Look up payouts from paytable
+	var symbol_table: Dictionary = config.paytable.payouts.get(best_symbol, {})
+	var payout: int = symbol_table.get(best_count, 0)
+
+	return payout
