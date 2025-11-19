@@ -1,3 +1,8 @@
 63f7b34db8d8cdea90c76aacccf841ec
-::res://::1763445940
+::res://::1763563930
 icon.svg::CompressedTexture2D::7557007833969514270::1763445937::1763445941::1::::<><><>0<>0<>c6fdb12929b55a9c55b8c318f718fa67<>res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex::
+main.gd::GDScript::7326326171883671689::1763450990::0::1::::<>Node2D<><>0<>0<><>::
+main.tscn::PackedScene::2288984454639926704::1763449391::0::1::::<><><>0<>0<><>::uid://dcm6r0bm0gnn2::::res://main.gd<>uid://dr8ueyfu2v4ly::::res://reel.tscn
+reel.gd::GDScript::2468394231043772806::1763453040::0::1::::<>Control<><>0<>0<><>::
+reel.tscn::PackedScene::8421819611070849562::1763453015::0::1::::<><><>0<>0<><>::uid://bbfyde0wp24ri::::res://reel.gd
+symbol.tscn::PackedScene::709246027051697613::1763450089::0::1::::<><><>0<>0<><>::

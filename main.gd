@@ -3,9 +3,7 @@ extends Node2D
 var credits: int = 100
 var spin_cost: int = 5
 
-@onready var reel1 = $Reel1
-@onready var reel2 = $Reel2
-@onready var reel3 = $Reel3
+@onready var reels: Array = get_tree().get_nodes_in_group("slot_reel")
 
 @onready var spin_button: Button = $SpinButton
 @onready var credits_label: Label = $CreditsLabel
@@ -13,54 +11,79 @@ var spin_cost: int = 5
 
 var results: Array[String] = []
 
+
 func _ready():
+	print("======================")
+	print("DEBUG START")
+	print("Reels found:", reels)
+	for r in reels:
+		print(" - Reel:", r.name)
+	print("======================")
+
 	update_ui()
+	spin_button.pressed.connect(_on_spin_pressed)
 
-	# Connect button
-	spin_button.pressed.connect(_on_spin_button_pressed)
+	for reel in reels:
+		reel.spin_finished.connect(_on_reel_finished)
 
-	# Connect reel finished signals
-	reel1.spin_finished.connect(_on_reel_finished)
-	reel2.spin_finished.connect(_on_reel_finished)
-	reel3.spin_finished.connect(_on_reel_finished)
 
 func update_ui():
 	credits_label.text = "Credits: %d" % credits
 
-func _on_spin_button_pressed():
+
+func _on_spin_pressed():
+	print("SPIN PRESSED")
+	print("Credits:", credits, "Cost:", spin_cost)
+
 	if credits < spin_cost:
+		print("Not enough credits")
 		result_label.text = "Not enough credits!"
 		return
 
-	# Deduct cost
 	credits -= spin_cost
 	update_ui()
 	result_label.text = ""
-
-	# Disable button during spin
 	spin_button.disabled = true
-
-	# Prepare for new results
 	results.clear()
 
-	# Start all reels simultaneously
-	reel1.spin()
-	reel2.spin()
-	reel3.spin()
+	print("Spinning reels:", reels)
+
+	for reel in reels:
+		var symbol := random_symbol_for(reel)
+		print("Calling spin() on:", reel.name, "target =", symbol)
+		reel.spin(symbol)
+
+
+func random_symbol_for(reel) -> String:
+	return reel.symbols[randi() % reel.symbols.size()]
+
 
 func _on_reel_finished(symbol: String):
+	print("Reel finished with:", symbol)
 	results.append(symbol)
 
-	# When all 3 reels finished
-	if results.size() == 3:
-		evaluate_spin(results[0], results[1], results[2])
+	if results.size() == reels.size():
+		print("All reels finished:", results)
+		evaluate_spin(results)
 		spin_button.disabled = false
 
-func evaluate_spin(s1: String, s2: String, s3: String):
-	if s1 == s2 and s2 == s3:
+
+func evaluate_spin(symbols: Array[String]):
+	print("Evaluating:", symbols)
+
+	var counts := {}
+
+	for s in symbols:
+		counts[s] = (counts.get(s, 0) + 1)
+
+	var highest := 0
+	for k in counts.keys():
+		highest = max(highest, counts[k])
+
+	if highest >= 3:
 		credits += 50
 		result_label.text = "JACKPOT! +50"
-	elif s1 == s2 or s2 == s3 or s1 == s3:
+	elif highest == 2:
 		credits += 10
 		result_label.text = "Nice! +10"
 	else:
